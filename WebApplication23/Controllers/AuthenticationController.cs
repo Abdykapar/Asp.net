@@ -12,6 +12,7 @@ namespace WebApplication20.Controllers
 {
     public class AuthenticationController : Controller
     {
+        private Dals db = new Dals();
         // GET: Authentication
         public ActionResult Login()
         {
@@ -23,7 +24,7 @@ namespace WebApplication20.Controllers
             Dals _odal = new Dals();
             User user = new User();
 
-            user = (from frm in _odal.User.ToList() where frm.Name == u.Name && frm.Parola == u.Parola select frm).FirstOrDefault();
+            user = (from frm in _odal.User.ToList() where frm.email == u.email && frm.Parola == u.Parola select frm).FirstOrDefault();
             if (user != null)
             {
                 FormsAuthentication.SetAuthCookie(user.Name, false);
@@ -31,6 +32,27 @@ namespace WebApplication20.Controllers
             }
             else
                 return View("Login");
+        }
+
+        [HttpGet]
+        public ActionResult Registration()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Registration([Bind(Include = "id,Name,Surname,Parola,email")] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                db.User.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Main");
+            }
+            
+            return View(user);
         }
         public ActionResult Logout()
         {

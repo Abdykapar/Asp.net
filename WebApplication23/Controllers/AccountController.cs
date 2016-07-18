@@ -26,7 +26,7 @@ namespace WebApplication23.Controllers
         {
             var message = await EMailTemplate("WelcomeEmail");
             message = message.Replace("@ViewBag.Name", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.FirstName));
-            await MassageServices.SendEmailAsync(model.Email, "Welcome!", message);
+            await MassageServices.SendEmailAsync(model.Email, "Welcome!", model.Message);
             return View("EmailSent");
         }
 

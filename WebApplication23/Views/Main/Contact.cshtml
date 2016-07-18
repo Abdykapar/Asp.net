@@ -1,0 +1,69 @@
+﻿@model WebApplication23.Models.SendEmailViewModel
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+
+  <!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style="background-image: url('../../Content/img/contact-bg.jpg');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="page-heading">
+                    <h1>Contact Me</h1>
+                    <hr class="small">
+                    <span class="subheading">Have questions? I have answers (maybe).</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container top">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <p>Want to get in touch with me? Fill out the form below to send me a message and I will try to get back to you within 24 hours!</p>
+            <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
+            <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
+            <!-- NOTE: To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
+            @using (Html.BeginForm("SendEmail", "Account", FormMethod.Post, new { role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        @Html.LabelFor(m => m.FirstName, new { @class = " control-label" })
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control",@placeholder="Name" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            @Html.LabelFor(m => m.Email, new { @class = " control-label" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" ,@placeholder = "Email"})
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label>Message</label>
+                            @Html.TextAreaFor(m => m.Message,new { @class = "form-control" ,@rows = "5",@placeholder="Message"})
+                            @Html.ValidationMessageFor(m => m.Message,"",new { @class = "text-danger"})
+                        </div>
+                    </div>
+                    <br>
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12">
+                            <button type="submit" class="btn btn-default">Send</button>
+                        </div>
+                    </div>
+                    }
+                </div>
+    </div>
+</div>
+
+<hr>
+

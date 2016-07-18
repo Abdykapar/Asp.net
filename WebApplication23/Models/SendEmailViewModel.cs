@@ -16,5 +16,10 @@ namespace WebApplication23.Models
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name ="Message")]
+        public string Message { get; set; }
     }
 }
