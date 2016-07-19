@@ -9,6 +9,7 @@ namespace WebApplication23.Models
 {
     public class User
     {
+        [Key]
         public int id { get; set; }
         [Required]
         [Display(Name = "Name")]
@@ -22,7 +23,13 @@ namespace WebApplication23.Models
         [Required]
         [Display(Name = "Email")]
         public string email { get; set; }
-        
+
+        [Required]
+        [Display(Name = "role_id")]
+        public int role_id { get; set; }
+
+        public virtual Role Role { get; set; }
+
         public virtual ICollection<Homeland> Homelands { get; set; }
     }
 }

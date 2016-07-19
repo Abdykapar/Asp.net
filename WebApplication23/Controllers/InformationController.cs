@@ -11,113 +11,112 @@ using WebApplication23.Models;
 
 namespace WebApplication23.Controllers
 {
-    public class UsersController : Controller
+    public class InformationController : Controller
     {
         private Dals db = new Dals();
 
-        // GET: Users
-        [Authorize(Roles = "Moderator")]
+        // GET: Information
         public ActionResult Index()
         {
-            var user = db.User.Include(u => u.Role);
-            return View(user.ToList());
+            var information = db.Information.Include(i => i.Homelands);
+            return View(information.ToList());
         }
 
-        // GET: Users/Details/5
+        // GET: Information/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.User.Find(id);
-            if (user == null)
+            Information information = db.Information.Find(id);
+            if (information == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(information);
         }
 
-        // GET: Users/Create
+        // GET: Information/Create
         public ActionResult Create()
         {
-            ViewBag.role_id = new SelectList(db.Role, "id", "Name");
+            ViewBag.homeland_id = new SelectList(db.Homeland, "id", "Name");
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Information/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,Name,Surname,Parola,email,role_id")] User user)
+        public ActionResult Create([Bind(Include = "id,Title,Body,homeland_id")] Information information)
         {
             if (ModelState.IsValid)
             {
-                db.User.Add(user);
+                db.Information.Add(information);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.role_id = new SelectList(db.Role, "id", "Name", user.role_id);
-            return View(user);
+            ViewBag.homeland_id = new SelectList(db.Homeland, "id", "Name", information.homeland_id);
+            return View(information);
         }
 
-        // GET: Users/Edit/5
+        // GET: Information/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.User.Find(id);
-            if (user == null)
+            Information information = db.Information.Find(id);
+            if (information == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.role_id = new SelectList(db.Role, "id", "Name", user.role_id);
-            return View(user);
+            ViewBag.homeland_id = new SelectList(db.Homeland, "id", "Name", information.homeland_id);
+            return View(information);
         }
 
-        // POST: Users/Edit/5
+        // POST: Information/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Name,Surname,Parola,email,role_id")] User user)
+        public ActionResult Edit([Bind(Include = "id,Title,Body,homeland_id")] Information information)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
+                db.Entry(information).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.role_id = new SelectList(db.Role, "id", "Name", user.role_id);
-            return View(user);
+            ViewBag.homeland_id = new SelectList(db.Homeland, "id", "Name", information.homeland_id);
+            return View(information);
         }
 
-        // GET: Users/Delete/5
+        // GET: Information/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.User.Find(id);
-            if (user == null)
+            Information information = db.Information.Find(id);
+            if (information == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(information);
         }
 
-        // POST: Users/Delete/5
+        // POST: Information/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.User.Find(id);
-            db.User.Remove(user);
+            Information information = db.Information.Find(id);
+            db.Information.Remove(information);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

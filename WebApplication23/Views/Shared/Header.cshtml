@@ -8,31 +8,28 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/Main/Index">Start Bootstrap</a>
+            <a class="navbar-brand" href="/Main/Index">Ana Sayfa</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="/Main/About">About</a>
+                    <a href="/Main/About">Hakkımızda</a>
                 </li>
                 <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="/Main/Contact">Contact</a>
+                    <a href="/Main/Contact">İletişim</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li><a href="#">Welcome @User.Identity.Name!</a></li>
-                        <li><a href="/Authentication/Logout">Log out</a></li>
+                    <li><a href="#">Hoş Geldin @User.Identity.Name!</a></li>
+                     <li><a href="/Authentication/Logout">Çıkış</a></li>
                 }
                 else
                 {
-                    <li><a href="/Authentication/Login">Sign in</a></li>
-                        <li><a href="/Authentication/Registration">Register</a></li>
+                    <li><a href="/Authentication/Login">Giriş</a></li>
+                    <li><a href="/Authentication/Registration">Kayıt Yap</a></li>
                 }
 
             </ul>

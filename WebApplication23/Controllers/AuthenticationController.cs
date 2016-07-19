@@ -10,12 +10,15 @@ using WebApplication23.Models;
 
 namespace WebApplication20.Controllers
 {
+    [AllowAnonymous]
     public class AuthenticationController : Controller
     {
         private Dals db = new Dals();
         // GET: Authentication
         public ActionResult Login()
         {
+            User u = (from frm in db.User.ToList() where frm.Name == User.Identity.Name select frm).FirstOrDefault();
+          
             return View();
         }
 
@@ -43,7 +46,7 @@ namespace WebApplication20.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Registration([Bind(Include = "id,Name,Surname,Parola,email")] User user)
+        public ActionResult Registration([Bind(Include = "id,Name,Surname,Parola,email,role_id")] User user)
         {
             if (ModelState.IsValid)
             {

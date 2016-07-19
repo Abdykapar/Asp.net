@@ -15,10 +15,13 @@ namespace WebApplication23.Dal
 
         public DbSet<Information> Information { get; set; }
 
+        public DbSet<Role> Role { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<User>().HasMany<Homeland>(s => s.Homelands).WithRequired(s => s.Users).HasForeignKey(s => s.user_id);
+            modelBuilder.Entity<User>().HasRequired<Role>(s => s.Role).WithMany(s => s.Users).HasForeignKey(s => s.role_id);
 
             modelBuilder.Entity<Homeland>().ToTable("Homelands");
             modelBuilder.Entity<Homeland>().HasRequired<User>(s => s.Users).WithMany(s => s.Homelands).HasForeignKey(s => s.user_id);
@@ -26,6 +29,10 @@ namespace WebApplication23.Dal
 
             modelBuilder.Entity<Information>().ToTable("Informations");
             modelBuilder.Entity<Information>().HasRequired<Homeland>(s => s.Homelands).WithMany(s => s.Informations).HasForeignKey(s => s.homeland_id);
+
+            modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<Role>().HasMany<User>(s => s.Users).WithRequired(s => s.Role).HasForeignKey(s => s.role_id);
+                
         }
     }
 }
